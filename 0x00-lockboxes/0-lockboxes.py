@@ -6,6 +6,7 @@ and each box may contain keys to the other boxes.
 Write a method that determines if all the boxes can be opened.
 """
 def canUnlockAll(boxes):
+    """return True or False"""
     unlocked = boxes[0]
     for box_id, keys in enumerate(boxes):
         if not keys:
@@ -16,6 +17,6 @@ def canUnlockAll(boxes):
             if key < len(boxes) and key not in unlocked and key != box_id:
                 unlocked.append(key)
     print(unlocked)
-    if len(unlocked)== len(boxes):
+    if len(unlocked) == len(boxes):
         return True
     return False
