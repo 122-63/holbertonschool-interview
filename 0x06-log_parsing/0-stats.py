@@ -2,7 +2,7 @@
 """
 script that reads stdin line by line and computes metrics:
 """
-import sys
+from sys import stdin
 
 
 status_code = {"200":0, "301":0, "400":0, "401":0,
@@ -22,19 +22,16 @@ def print_status():
 
 
 if __name__ == "__main__":
-    count = 0 
-    try: 
-        for data in sys.stdin:
+    count = 0
+    try:
+        for data in stdin:
             try:
                 fact = data.split(' ')
-                """ If there is a status code """
                 if fact[-2] in status_code:
                     status_code[fact[-2]] += 1
-                """ If there is a lenght """
                 sum += int(fact[-1])
             except:
                 pass
-            """ Printing control """
             count += 1
             if count == 10:
                 print_status()
@@ -44,5 +41,3 @@ if __name__ == "__main__":
         raise
     else:
         print_status()
-
-
