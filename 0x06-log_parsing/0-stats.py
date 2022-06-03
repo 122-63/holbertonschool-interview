@@ -12,30 +12,24 @@ sum = 0
 
 def print_status():
     """Print status"""
-    global sum
-
     print("File size: {}".format(sum))
-    sort = sorted(status_code.keys())
-    for i in sort:
-        if status_code[i] > 0:
-            print("{}: {}".format(i, status_code[i]))
+    for key, val in sorted(status_code.items()):
+        if val > 0:
+            print("{}: {}".format(key, val))
 
 
 if __name__ == "__main__":
-    count = 0
     try:
-        for data in stdin:
+        for i, line in enumerate(stdin, 1):
             try:
-                fact = data.split(' ')
-                if fact[-2] in status_code:
-                    status_code[fact[-2]] += 1
-                sum += int(fact[-1])
+                info = line.split()
+                sum += int(info[-1])
+                if info[-2] in status_code.keys():
+                    status_code[info[-2]] += 1
             except:
                 pass
-            count += 1
-            if count == 10:
+            if not i % 10:
                 print_status()
-                count = 0
     except KeyboardInterrupt:
         print_status()
         raise
