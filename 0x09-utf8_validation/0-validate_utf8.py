@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ UTF-8 Validation """
 
+
 def validUTF8(data):
     """
     Encode UTF-8
@@ -23,5 +24,4 @@ def validUTF8(data):
             if not (bin_rep[0] == '1' and bin_rep[1] == '0'):
                 return False
         n_bytes -= 1
-
     return n_bytes == 0
