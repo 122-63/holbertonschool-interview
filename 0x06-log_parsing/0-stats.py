@@ -1,38 +1,71 @@
 #!/usr/bin/python3
-"""
-script that reads stdin line by line 
-and computes metrics:
-"""
-from sys import stdin
+""" This is my problem :'v """
+import sys
+import re
+import signal
+from collections import OrderedDict
 
 
-status_code = {"200":0, "301":0, "400":0, "401":0,
-               "403":0, "404":0, "405":0, "500":0}
-sum = 0
+def search_items(line, s):
+    """ Search the items to positionate """
+    regexu = r"\s\d{3}\s\d{1,}"
+    txt = re.search(regexu, line)
+    word = txt.group()
+    word = word[1:]
+
+    regexd = r"\d{3}\s"
+    left = re.search(regexd, word)
+
+    code = left.group()
+    code = code[:-1]
+
+    regext = r"\s\d{1,}"
+    right = re.search(regext, word)
+
+    size = right.group()
+    size = size[1:]
+    size = int(size)
+
+    add_code(code, s)
+
+    return size
 
 
-def print_status():
-    """Print status"""
-    print("File size: {}".format(sum))
-    for key, val in sorted(status_code.items()):
-        if val > 0:
-            print("{}: {}".format(key, val))
+def add_code(code, codes):
+    """ Count the status code """
+    try:
+        codes[code] += 1
+    except KeyError:
+        pass
+
+
+def print_all(stat):
+    """ Print all """
+    stat = OrderedDict(stat)
+
+    for key, value in stat.items():
+        if value is not 0:
+            print("{}: {}".format(key, value))
 
 
 if __name__ == "__main__":
+    status = {"200": 0, "301": 0, "400": 0, "401": 0,
+              "403": 0, "404": 0, "405": 0, "500": 0}
+    file_size = 0
+    i = 0
+
     try:
-        for i, line in enumerate(stdin, 1):
-            try:
-                info = line.split()
-                sum += int(info[-1])
-                if info[-2] in status_code.keys():
-                    status_code[info[-2]] += 1
-            except:
-                pass
-            if not i % 10:
-                print_status()
+        for lines in sys.stdin:
+            file_size += search_items(lines, status)
+
+            if i is not 0 and i % 9 == 0:
+                print("File size: {:d}".format(file_size))
+                print_all(status)
+
+            i += 1
     except KeyboardInterrupt:
-        print_status()
-        raise
-    else:
-        print_status()
+        pass
+    finally:
+        print("File size: {:d}".format(file_size))
+        print_all(status)
+        sys.exit(0)
