@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-""" N queens """
+"""N Queens"""
 
 
 import sys
 
 
 def format_requirements(board):
-    """Write a program that solves the N queens problem"""
+    """Prints according to requirements"""
     ret = []
     for i in range(len(board)):
         colIdx = board[i].index(1)
@@ -16,9 +16,11 @@ def format_requirements(board):
 
 def is_valid_queen(board, curCol, row, n):
     """Checks if element is a valid queen"""
+    # Check prev columns
     for i in range(curCol):
         if board[row][i] == 1:
             return False
+    # Check for upper diagonal
     i = row
     j = curCol
     while i >= 0 and j >= 0:
@@ -26,6 +28,7 @@ def is_valid_queen(board, curCol, row, n):
             return False
         i -= 1
         j -= 1
+    # Check for lower diagonal
     i = row
     j = curCol
     while i < n and j >= 0:
@@ -63,4 +66,5 @@ if __name__ == '__main__':
         print("N must be at least 4")
         exit(1)
     board = [[0 for i in range(n)] for j in range(n)]
+    # first col is 0
     nQueens(board, 0, n)
