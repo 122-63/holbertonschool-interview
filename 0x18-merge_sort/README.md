@@ -1,5 +1,6 @@
-# 0x11. Heap Sort
-## Requirements
+# 0x18. Merge Sort
+## Details
+ By: Alexa Orrico, Software Engineer at Holberton School Weight: 1Project will startOct 10, 2022 12:00 AM, must end byOct 14, 2022 12:00 AMwas released atOct 12, 2022 12:00 AM An auto review will be launched at the deadline## Requirements
 ### General
 * Allowed editors:  ` vi ` ,  ` vim ` ,  ` emacs ` 
 * All your files will be compiled on Ubuntu 14.04 LTS
@@ -20,6 +21,7 @@
 ## More Info
 For this project you are given the following   ` print_array `   function:
 ```bash
+alexa@ubuntu-xenial:0x18-merge_sort$ cat print_array.c
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -43,32 +45,35 @@ void print_array(const int *array, size_t size)
     }
     printf("\n");
 }
+alexa@ubuntu-xenial:0x18-merge_sort$
 
 ```
-* Our file  ` print_array.c `  will be compiled with your functions during the correction.
+* Our file  ` print_array.c `  (containing the  ` print_array `  function) will be compiled with your functions during the correction.
 * Please declare the prototype of the function  ` print_array `  in your  ` sort.h `  header file
-Please, note this format is used for Task questions.
-*  ` O(1) ` 
+* Please, note this format is used for Big O notation:*  ` O(1) ` 
 *  ` O(n) ` 
 *  ` O(n!) ` 
 * n square ->  ` O(n^2) ` 
 * log(n) ->  ` O(log(n)) ` 
 * n * log(n) ->  ` O(nlog(n)) ` 
-* …
-Please use the “short” notation (don’t use constants). Example:   ` O(nk) `   or   ` O(wn) `   should be written   ` O(n) `  .If an answer is required within a file, all your answers files must have an empty line at the end.
+
 ## Tasks
-### 0. Heap sort
-          mandatory         Progress vs Score  Task Body Write a function that sorts an array of integers in ascending order using the  [Heap sort](https://intranet.hbtn.io/rltoken/SipKuh8bwYl5hTPAGFqutw) 
-  algorithm
-* Prototype:  ` void heap_sort(int *array, size_t size); ` 
-* You must implement the  ` sift-down `  heap sort algorithm
-* You’re expected to print the  ` array `  after each time you swap two elements (See example below)
-Write in the file   ` 0-O `  , the big O notations of the time complexity of the Heap sort algorithm, with 1 notation per line:
+### 0. Merge sort
+          mandatory         Progress vs Score  Task Body Write a function that sorts an array of integers in ascending order using the  [Merge Sort](https://intranet.hbtn.io/rltoken/ZvYviJcNKY01aZFOJNBHQg) 
+  algorithm:
+* Prototype:  ` void merge_sort(int *array, size_t size); ` 
+* You must implement the  ` top-down `  merge sort algorithm* When you divide an array into two sub-arrays, the size of the left array should always be <= the size of the right array. i.e.  ` {1, 2, 3, 4, 5} `  ->  ` {1, 2}, {3, 4, 5} ` 
+*  Sort the left array before the right array
+
+* You are allowed to use  ` printf ` 
+* You are allowed to use  ` malloc `  and  ` free `  only once (only one call)
+* Output: see example
+In the file   ` 0-O `  , write the Big O notations of the time complexity of the Merge Sort algorithm, with 1 notation per line:
 * in the best case
 * in the average case
 * in the worst case
 ```bash
-alex@/tmp/sort$ cat 0-main.c
+alexa@ubuntu-xenial:0x18-merge_sort$ cat 0-main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include "sort.h"
@@ -85,50 +90,58 @@ int main(void)
 
     print_array(array, n);
     printf("\n");
-    heap_sort(array, n);
+    merge_sort(array, n);
     printf("\n");
     print_array(array, n);
     return (0);
 }
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic 0-main.c 0-heap_sort.c print_array.c -o 0-heap
-alex@/tmp/sort$ ./0-heap
+alexa@ubuntu-xenial:0x18-merge_sort$ gcc -Wall -Wextra -Werror -pedantic 0-main.c 0-merge_sort.c print_array.c -o merge
+alexa@ubuntu-xenial:0x18-merge_sort$ ./merge
 19, 48, 99, 71, 13, 52, 96, 73, 86, 7
 
-19, 48, 99, 86, 13, 52, 96, 73, 71, 7
-19, 86, 99, 48, 13, 52, 96, 73, 71, 7
-19, 86, 99, 73, 13, 52, 96, 48, 71, 7
-99, 86, 19, 73, 13, 52, 96, 48, 71, 7
-99, 86, 96, 73, 13, 52, 19, 48, 71, 7
-7, 86, 96, 73, 13, 52, 19, 48, 71, 99
-96, 86, 7, 73, 13, 52, 19, 48, 71, 99
-96, 86, 52, 73, 13, 7, 19, 48, 71, 99
-71, 86, 52, 73, 13, 7, 19, 48, 96, 99
-86, 71, 52, 73, 13, 7, 19, 48, 96, 99
-86, 73, 52, 71, 13, 7, 19, 48, 96, 99
-48, 73, 52, 71, 13, 7, 19, 86, 96, 99
-73, 48, 52, 71, 13, 7, 19, 86, 96, 99
-73, 71, 52, 48, 13, 7, 19, 86, 96, 99
-19, 71, 52, 48, 13, 7, 73, 86, 96, 99
-71, 19, 52, 48, 13, 7, 73, 86, 96, 99
-71, 48, 52, 19, 13, 7, 73, 86, 96, 99
-7, 48, 52, 19, 13, 71, 73, 86, 96, 99
-52, 48, 7, 19, 13, 71, 73, 86, 96, 99
-13, 48, 7, 19, 52, 71, 73, 86, 96, 99
-48, 13, 7, 19, 52, 71, 73, 86, 96, 99
-48, 19, 7, 13, 52, 71, 73, 86, 96, 99
-13, 19, 7, 48, 52, 71, 73, 86, 96, 99
-19, 13, 7, 48, 52, 71, 73, 86, 96, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-13, 7, 19, 48, 52, 71, 73, 86, 96, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
+Merging...
+[left]: 19
+[right]: 48
+[Done]: 19, 48
+Merging...
+[left]: 71
+[right]: 13
+[Done]: 13, 71
+Merging...
+[left]: 99
+[right]: 13, 71
+[Done]: 13, 71, 99
+Merging...
+[left]: 19, 48
+[right]: 13, 71, 99
+[Done]: 13, 19, 48, 71, 99
+Merging...
+[left]: 52
+[right]: 96
+[Done]: 52, 96
+Merging...
+[left]: 86
+[right]: 7
+[Done]: 7, 86
+Merging...
+[left]: 73
+[right]: 7, 86
+[Done]: 7, 73, 86
+Merging...
+[left]: 52, 96
+[right]: 7, 73, 86
+[Done]: 7, 52, 73, 86, 96
+Merging...
+[left]: 13, 19, 48, 71, 99
+[right]: 7, 52, 73, 86, 96
+[Done]: 7, 13, 19, 48, 52, 71, 73, 86, 96, 99
 
 7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-alex@/tmp/sort$
+alexa@ubuntu-xenial:0x18-merge_sort$
 
 ```
  Task URLs  Github information Repo:
 * GitHub repository:  ` holbertonschool-interview ` 
-* Directory:  ` 0x11-heap_sort ` 
-* File:  ` 0-heap_sort.c, 0-O ` 
+* Directory:  ` 0x18-merge_sort ` 
+* File:  ` 0-merge_sort.c, 0-O ` 
  Self-paced manual review  Panel footer - Controls 
-×#### Recommended Sandbox
